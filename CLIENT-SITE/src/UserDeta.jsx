@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const UserDeta = () => {
   //   let users = useLoaderData();
@@ -30,6 +30,7 @@ const UserDeta = () => {
             <p>Name: {user.name}</p>
             <p>Email: {user.email}</p>
             <button onClick={() => hendelDelet(user._id)}>X</button>
+           <Link to={`/updete/${user._id}`}> <button>Updete</button></Link>
           </div>
         ))}
       </div>

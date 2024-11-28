@@ -11,7 +11,7 @@ function App() {
     let name = e.target.name.value;
     let email = e.target.email.value;
     let obj = { name, email }; // * ai obj ta ami server a pathaite caile akta post create korte hobe servert a
-    fetch("http://localhost:5000/user", {
+    fetch("http://localhost:3000/user", {
       // ! aikhane kon methot ar kache jabe ta bole deya lagbe noile get ar kache cole jay amra post ar kache deta pathaite cau tai post likhe dite hobe
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -20,7 +20,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        alert("succes")
+        alert("succes");
       });
   }
 
@@ -51,7 +51,9 @@ function App() {
           id=""
         />
       </form>
-      <Link className=" px-3 py-2 bg-slate-50" to={"/user"}>User</Link>
+      <Link className=" px-3 py-2 bg-slate-50" to={"/user"}>
+        User
+      </Link>
     </>
   );
 }

@@ -4,7 +4,7 @@ let cors = require("cors");
 let app = express();
 app.use(cors());
 app.use(express.json());
-let port = process.env.PORT || 5000;
+let port = process.env.PORT || 3000;
 let use = [
   { id: 1, name: "munna" },
   { id: 1, name: "munna" },
@@ -37,12 +37,36 @@ async function run() {
       let resuld = await user.toArray(); // * jegula anchi ogulake array banailam
       res.send(resuld); // aitar ata localhos a dekha jabe karon ata get methot
     });
+    //  * id diye deta dekhabo
+    app.get("/user/:id", async (req, res) => {
+      // * user/aikhane jei id asuk na keno sei id kei dekhabe
+      let id = req.params.id;
+      let query = { _id: new ObjectId(id) };
+      let user = await collectionMD.findOne(query);
+      res.send(user);
+    });
+    //  * put methot
+    app.put("/user/:id", async (req, res) => {
+      let id = req.params.id;
+      let update = req.body;//* body theke chneg korar por jeita pathacchi
+      let query = { _id: new ObjectId(id) };
+      let options={upsert: true};// ! thakle update korle noile create korbe ai line ar mane
+      let updeteuser={// * ki ki updete korte cai ogula set korbo
+        $set:{
+          name:update.name,
+          email:update.email
+        }
+      }
+      let result= await collectionMD.updateOne(query,updeteuser,options)
+      res.send(result)
+    });
+
     // ! id diye delet korte cai
     app.delete("/user/:id", async (req, res) => {
       let id = req.params.id;
       console.log("delet id ", id);
-      let query = { _id: new ObjectId(id) };
-      let result = await collectionMD.deleteOne(query);
+      let query = { _id: new ObjectId(id) }; // ! ata diye mongodb ar _id sathe ami jei id delet korte cai oita mach korte chi
+      let result = await collectionMD.deleteOne(query); // ! collectionMD ar moddhe theke deleteOne mane akta delet korte cai jeitar id query ar sathe mile ajy
       res.send(result);
     });
 
